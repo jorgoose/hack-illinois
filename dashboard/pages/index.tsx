@@ -4,8 +4,34 @@ import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Book } from "lucide-react"
+import { use, useEffect } from "react"
+import { Octokit } from "@octokit/core"
+import { useState } from "react"
+
 
 export default function Component() {
+const [repositories, setRepositories] = useState([])
+
+useEffect(() => {
+  const fetchRepositories = async () => {
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_TOKEN,
+    });
+
+    const response = await octokit.request("GET /users/kygoben/repos", {
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
+
+    setRepositories(response.data);
+    console.log(response.data);
+  };
+
+  fetchRepositories();
+}, []);
+
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
@@ -63,13 +89,13 @@ export default function Component() {
           <p className="text-gray-500 dark:text-gray-400">Select a repository to start fuzz testing</p>
         </div>
         <div className="grid gap-6 max-w-6xl w-full mx-auto">
-        {/* Example Repository Card */}
-        <Card>
+        {repositories.map(repo => (
+        <Card key={repo.id}>
           <CardHeader className="flex flex-row items-center gap-4">
             <BookOpenIcon className="w-8 h-8" />
             <div className="grid gap-1">
-              <CardTitle>Repository Name</CardTitle>
-              <CardDescription>repository-url.com</CardDescription>
+              <CardTitle>{repo.name}</CardTitle>
+              <CardDescription>{repo.url}</CardDescription>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -88,7 +114,7 @@ export default function Component() {
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">Updated 3h ago</span>
+                <span className="text-gray-500 dark:text-gray-400">{repo.updated_at}</span>
               </div>
               <div className="flex items-center gap-1">
                 <GitBranchIcon className="w-4 h-4" />
@@ -110,90 +136,8 @@ export default function Component() {
             </div>
           </CardContent>
         </Card>
-        {/* Repository Card with no fuzz testing */}
-        <Card>
-          <CardHeader className="flex flex-row items-center gap-4">
-            <BookOpenIcon className="w-8 h-8" />
-            <div className="grid gap-1">
-              <CardTitle>Repo 1</CardTitle>
-              <CardDescription>repo1-url.com</CardDescription>
-            </div>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">Updated 1 day ago</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <GitBranchIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">main</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="bg-gray-500 rounded-full h-4 w-4"></span>
-                <span className="text-gray-500 dark:text-gray-400">No fuzz testing</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Repository Card with fuzz testing in progress */}
-        <Card>
-          <CardHeader className="flex flex-row items-center gap-4">
-            <BookOpenIcon className="w-8 h-8" />
-            <div className="grid gap-1">
-              <CardTitle>Repo 2</CardTitle>
-              <CardDescription>repo2-url.com</CardDescription>
-            </div>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">Updated 2 hours ago</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <GitBranchIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">main</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="bg-yellow-500 rounded-full h-4 w-4"></span>
-                <span className="text-gray-500 dark:text-gray-400">Fuzz testing in progress</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Repository Card with fuzz testing completed and vulnerabilities found */}
-        <Card>
-          <CardHeader className="flex flex-row items-center gap-4">
-            <BookOpenIcon className="w-8 h-8" />
-            <div className="grid gap-1">
-              <CardTitle>Repo 3</CardTitle>
-              <CardDescription>repo3-url.com</CardDescription>
-            </div>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">Updated 5 days ago</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <GitBranchIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">main</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="bg-red-500 rounded-full h-4 w-4"></span>
-                <span className="text-gray-500 dark:text-gray-400">Potential vulnerabilities found</span>
-                {/* Number count of potential vulnerabilities, with warning symbol */}
-                <span className="text-red-500 dark:text-red-400">3</span>
-                {/* Additional stats for completed testing */}
-                <span className="text-gray-500 dark:text-gray-400">Functions analyzed: 65</span>
-                <span className="text-gray-500 dark:text-gray-400">Total time: 3h</span>
-                <Button className="text-blue-500 dark:text-blue-400">View Report</Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        ))}
+       
       </div>
 
       </main>
