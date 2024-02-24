@@ -171,8 +171,11 @@ export function repos() {
   )
 }
 
+interface IconProps {
+  className?: string
+}
 
-function FrameIcon(props) {
+function FrameIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -195,7 +198,7 @@ function FrameIcon(props) {
 }
 
 
-function HomeIcon(props) {
+function HomeIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -216,7 +219,7 @@ function HomeIcon(props) {
 }
 
 
-function MoreHorizontalIcon(props) {
+function MoreHorizontalIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -238,7 +241,7 @@ function MoreHorizontalIcon(props) {
 }
 
 
-function GithubIcon(props) {
+function GithubIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -259,7 +262,7 @@ function GithubIcon(props) {
 }
 
 
-function GitBranchIcon(props) {
+function GitBranchIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -282,7 +285,7 @@ function GitBranchIcon(props) {
 }
 
 
-function BookOpenIcon(props) {
+function BookOpenIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -303,7 +306,7 @@ function BookOpenIcon(props) {
 }
 
 
-function LayoutPanelLeftIcon(props) {
+function LayoutPanelLeftIcon(props: IconProps) {
   return (
     <svg
       {...props}
