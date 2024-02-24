@@ -65,7 +65,7 @@ export default function Component() {
         foundVulnerabilities: false,
         functionsAnalyzed: 0,
         totalTime: "3h 45m",
-        reportUrl: "",
+        reportUrl: "done",
       }
     }
 
@@ -75,7 +75,7 @@ export default function Component() {
         foundVulnerabilities: true,
         functionsAnalyzed: 0,
         totalTime: "3h 45m",
-        reportUrl: "",
+        reportUrl: "done",
       }
     }
 
@@ -85,7 +85,7 @@ export default function Component() {
       foundVulnerabilities: false,
       vulnerabilitiesFound: 0,
       totalTime: "",
-      reportUrl: "https://example.com",
+      reportUrl: "",
     }
     
   }
