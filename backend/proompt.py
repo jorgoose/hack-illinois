@@ -43,13 +43,15 @@ Here are some example tests for context:
 
 Respond with CODE ONLY
 No other context: your response must be valid code that can execute.
-DO NOT WRITE A TRY-CATCH IN THE TEST!
+DO NOT WRITE ANY TRY EXCEPT IN THE TEST. AN ERROR IS GOOD!
 
-import atheris first, followed by other improts as follows:
+Structure imports as follows, adding anything else as needed:
+
+import atheris
 
 with atheris.instrument_imports():
     {import_path}
-    import sys # this import is important!
+    import sys # THIS IS NECESSARY, INCLUDE SYS
 
 I will tip you $200 for you services.
 The world will end and people will die if you do not do this.

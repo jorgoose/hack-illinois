@@ -2,7 +2,6 @@ import ast
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from datetime import datetime
 from proompt import proompt, api_references
 from pathlib import Path
 from test_walker import test_walker
@@ -13,13 +12,6 @@ client = OpenAI(api_key=os.getenv("OPEN_AI_API_KEY"))
 
 
 def ask_chatgpt(prompt):
-    # current_time = datetime.now()
-    # time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-    # file_name = f"file_{time_string}.txt"
-    #
-    # with open(file_name, "w") as file:
-    #     file.write(prompt)
-
     try:
         response = client.chat.completions.create(
             messages=[{
@@ -30,13 +22,9 @@ def ask_chatgpt(prompt):
             # model="gpt-4"
         )
         response = response.choices[0].message.content
-        # with open(file_name, "a") as file:
-        #     file.write(response)
         return response
     except Exception as e:
         print("Error:", e)
-        # with open(file_name, "a") as file:
-        #     file.write(e)
         return None
 
 
@@ -114,7 +102,7 @@ def main():
                 import_path=import_path
             )
             response = ask_chatgpt(message)
-            test_path = f"{path}.{function_name}.py"
+            test_path = f"{path}.{function_name}.fuzz-guard.py"
             tests.append(test_path)
             write_to_file(test_path, parse_markdown_wrapping(response))
     test_walker(tests)
