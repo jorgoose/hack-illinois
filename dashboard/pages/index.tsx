@@ -63,7 +63,7 @@ export default function Component() {
       return {
         status: "completed",
         foundVulnerabilities: false,
-        functionsAnalyzed: 0,
+        functionsAnalyzed: 47,
         totalTime: "3h 45m",
         reportUrl: "done",
       }
@@ -206,14 +206,17 @@ export default function Component() {
               </div>
               {/* Additional stats and View Report button */}
               <div className="flex items-center gap-4 text-sm">
-                <div className="flex flex-col items-end">
+                
+                {fuzzingStatus.reportUrl && (
+                  <>
+                  <div className="flex flex-col items-end">
                   <span className="text-gray-500 dark:text-gray-400">Functions analyzed: {fuzzingStatus.functionsAnalyzed}</span>
                   <span className="text-gray-500 dark:text-gray-400">Total time: {fuzzingStatus.totalTime}</span>
                 </div>
-                {fuzzingStatus.reportUrl && (
                   <Link href={"/repo/" + repo.owner.login + "/" + repo.name}>
                     <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
                   </Link>
+                  </>
                 )}
               </div>
             </CardContent>
