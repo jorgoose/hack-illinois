@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/SBb2Dt0ZZ5g
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
