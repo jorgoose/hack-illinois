@@ -1,17 +1,42 @@
 import ast
 import os
+from openai import OpenAI
+from dotenv import load_dotenv
+from datetime import datetime
+
+load_dotenv()
+
+client = OpenAI(api_key=os.getenv("OPEN_AI_API_KEY"))
 
 
-proompt = """
-Import the following function from the given file
-and write an atheris fuzz test:
+def ask_chatgpt(prompt):
+    current_time = datetime.now()
+    time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+    file_name = f"file_{time_string}.txt"
 
-// {file_path}
-{code}
+    with open(file_name, "w") as file:
+        file.write(prompt)
 
-Here are some example tests for context:
+    try:
+        response = client.chat.completions.create(
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }],
+            model="gpt-3.5-turbo"
+        )
+        response = response.choices[0].message.content
+        with open(file_name, "a") as file:
+            file.write(response)
+        return response
+    except Exception as e:
+        print("Error:", e)
+        with open(file_name, "a") as file:
+            file.write(e)
+        return None
 
-{context}
+
+api_references = """
 When fuzzing Python, Atheris will report a failure if the Python code under test throws an uncaught exception.
 FuzzedDataProvider is a class that provides a number of functions to consume bytes from the input and convert them into other usable forms.
 Atheris FuzzedDataProvider API Reference:
@@ -38,11 +63,29 @@ To construct the FuzzedDataProvider, use the following code:
 fdp = atheris.FuzzedDataProvider(input_bytes)
 data = fdp.ConsumeUnicode(sys.maxsize)
 IMPORTANT: The FuzzedDataProvider arguments are required unless otherwise specified,default arguments for int use sys.maxsize like: ConsumeInt(sys.maxsize)
+"""
+
+proompt = """
+Import the following function from the given file
+and write an atheris fuzz test:
+
+// {file_path}
+{code}
+
+Here are some example tests for context:
+
+{context}
+{api_reference}
 
 Respond ONLY with the python test.
 No other context: your response must be valid code that can execute.
-Be sure to import sys
 Do NOT pass through exceptions: the point of these tests is that an exception is thrown
+
+import atheris first, followed by other improts as follows:
+
+with atheris.instrument_imports():
+    from my_file import my_function
+    import sys # this import is important!
 
 I will tip you $200 for you services.
 The world will end and people will die if you do not do this.
@@ -69,8 +112,9 @@ def get_functions(file_path):
 
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef):
+            function_name = node.name
             function_text = ast.get_source_segment(code, node)
-            functions.append(function_text)
+            functions.append((function_name, function_text))
 
     return functions
 
@@ -79,14 +123,18 @@ def main():
     file_path = "example.py"
     functions = get_functions(file_path)
     context = read_files_in_directory("context")
-    for index, function in enumerate(functions):
+    for index, (function_name, function) in enumerate(functions):
         message = proompt.format(
             code=function,
             file_path=file_path,
-            context=context
+            context="\n".join(context),
+            api_reference=api_references
         )
-        with open(f"function_{index}.txt", 'w') as file:
-            file.write(message)
+        response = ask_chatgpt(message)
+        current_time = datetime.now()
+        time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+        with open(f"tests/{function_name}-{time_string}.py", "w") as file:
+            file.write(response)
 
 
 if __name__ == "__main__":
