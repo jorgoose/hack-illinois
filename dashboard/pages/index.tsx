@@ -12,6 +12,13 @@ import { formatDistanceToNow } from "date-fns"
 
 export default function Component() {
 
+  interface GitHubUser {
+    login: string
+    avatar_url: string
+  }
+
+  const [githubUser, setGithubUser] = useState({} as GitHubUser)
+
   const [repositories, setRepositories] = useState([])
 
   useEffect(() => {
@@ -27,6 +34,7 @@ export default function Component() {
       });
 
       setRepositories(response.data);
+      setGithubUser(response.data[0].owner);
       console.log(response.data);
     };
 
@@ -41,6 +49,7 @@ export default function Component() {
     updated_at: string
     owner: {
       login: string
+      avatar_url: string
     }
   }
 
@@ -122,7 +131,8 @@ export default function Component() {
                   alt="Avatar"
                   className="rounded-full border"
                   height="32"
-                  src="/placeholder.svg"
+                  // user avatar URL goes here
+                  src={githubUser.avatar_url}
                   style={{
                     aspectRatio: "32/32",
                     objectFit: "cover",
