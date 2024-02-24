@@ -119,6 +119,31 @@ def get_functions(file_path):
     return functions
 
 
+def write_to_file(path, contents):
+    try:
+        directory_path = os.path.dirname(path)
+
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+
+        with open(path, "w") as file:
+            file.write(contents)
+
+    except Exception as e:
+        print(f"Error occurred while writing to '{path}': {e}")
+
+
+def remove_markdown_wrapping(text):
+    lines = text.split('\n')
+
+    if lines and '`' in lines[0]:
+        lines.pop(0)
+    if lines and '`' in lines[-1]:
+        lines.pop(-1)
+
+    return '\n'.join(lines)
+
+
 def main():
     file_path = "example.py"
     functions = get_functions(file_path)
@@ -133,8 +158,7 @@ def main():
         response = ask_chatgpt(message)
         current_time = datetime.now()
         time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-        with open(f"tests/{function_name}-{time_string}.py", "w") as file:
-            file.write(response)
+        write_to_file(f"tests/{function_name}-{time_string}.py", remove_markdown_wrapping(response))
 
 
 if __name__ == "__main__":
