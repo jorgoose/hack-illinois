@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { Book } from "lucide-react"
+import { AlarmCheck, Book, MessageCircleWarningIcon } from "lucide-react"
 import { use, useEffect } from "react"
 import { Octokit } from "@octokit/core"
 import { useState } from "react"
@@ -186,6 +186,23 @@ export default function Component() {
                   <ShieldIcon className={`w-4 h-4 ${fuzzingStatus.status === 'completed' ? 'text-green-500' : 'text-stone-700'}`} />
                   <span className="text-gray-500 dark:text-gray-400">{`Fuzz testing ${fuzzingStatus.status}`}</span>
                 </div>
+                {/* Only display if status is completed */}
+                {/* If vulnerabilities found, display MessageCircleWarningIcon with red. */}
+                {/* If vulnerabilities not found, display CheckCircleIcon with green */}
+                <div className="flex items-center gap-1">
+                  {fuzzingStatus.status === "completed" && (
+                    <>
+                      {fuzzingStatus.foundVulnerabilities ? (
+                        <MessageCircleWarningIcon className="w-4 h-4 text-red-500" />
+                      ) : (
+                        <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                      )}
+                      <span className="text-gray-500 dark:text-gray-400">
+                        {fuzzingStatus.foundVulnerabilities ? "Vulnerabilities found" : "No vulnerabilities found"}
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
               {/* Additional stats and View Report button */}
               <div className="flex items-center gap-4 text-sm">
@@ -279,6 +296,47 @@ function ShieldIcon(props: IconProps) {
   )
 }
 
+// Check mark circle icon
+function CheckCircleIcon(props: IconProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 12l2 2 4-4" />
+    </svg>
+  )
+}
+
+// Warning triangle icon
+function AlertTriangleIcon(props: IconProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 9v2m0 4v.01" />
+      <path d="M12 4.5c-4.5 3-7.5 8-7.5 8s3 5 7.5 8c4.5-3 7.5-8 7.5-8s-3-5-7.5-8z" />
+    </svg>
+  )
+}
 
 function GitBranchIcon(props: IconProps) {
   return (
