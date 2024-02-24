@@ -287,7 +287,12 @@ export default function RepoPage() {
   )
 }
 
-function AlertTriangleIcon(props) {
+interface IconProps {
+    className?: string
+    onClick?: () => void
+  }
+
+function AlertTriangleIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -309,7 +314,7 @@ function AlertTriangleIcon(props) {
 }
 
 
-function CalendarClockIcon(props) {
+function CalendarClockIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -334,7 +339,7 @@ function CalendarClockIcon(props) {
 }
 
 
-function FileIcon(props) {
+function FileIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -355,7 +360,7 @@ function FileIcon(props) {
 }
 
 
-function GitBranchIcon(props) {
+function GitBranchIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -378,7 +383,7 @@ function GitBranchIcon(props) {
 }
 
 
-function GitCommitIcon(props) {
+function GitCommitIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -400,7 +405,7 @@ function GitCommitIcon(props) {
 }
 
 
-function MoreHorizontalIcon(props) {
+function MoreHorizontalIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -422,7 +427,7 @@ function MoreHorizontalIcon(props) {
 }
 
 
-function TerminalIcon(props) {
+function TerminalIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -442,7 +447,7 @@ function TerminalIcon(props) {
   )
 }
 
-function BoxIcon(props) {
+function BoxIcon(props: IconProps) {
     return (
       <svg
         {...props}
