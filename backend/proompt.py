@@ -1,4 +1,5 @@
 api_references = """
+IMPORTANT: The FuzzedDataProvider arguments are required unless otherwise specified,default arguments for int use sys.maxsize like: EXAMPLE ConsumeInt(sys.maxsize)
 When fuzzing Python, Atheris will report a failure if the Python code under test throws an uncaught exception.
 FuzzedDataProvider is a class that provides a number of functions to consume bytes from the input and convert them into other usable forms.
 Atheris FuzzedDataProvider API Reference:
@@ -24,7 +25,8 @@ ConsumeBool(): Consume either True or False.
 To construct the FuzzedDataProvider, use the following code:
 fdp = atheris.FuzzedDataProvider(input_bytes)
 data = fdp.ConsumeUnicode(sys.maxsize)
-IMPORTANT: The FuzzedDataProvider arguments are required unless otherwise specified,default arguments for int use sys.maxsize like: ConsumeInt(sys.maxsize)
+
+IF YOU DO NOT PROVIDE THE CORRECT ARGUMENTS THE CODE WILL FAIL!
 """
 
 proompt = """
@@ -39,9 +41,9 @@ Here are some example tests for context:
 {context}
 {api_reference}
 
-Respond ONLY with the python test.
+Respond with CODE ONLY
 No other context: your response must be valid code that can execute.
-Do NOT pass through exceptions: the point of these tests is that an exception is thrown
+DO NOT WRITE A TRY-CATCH IN THE TEST!
 
 import atheris first, followed by other improts as follows:
 
