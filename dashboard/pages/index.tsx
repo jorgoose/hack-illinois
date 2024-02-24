@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { Book } from "lucide-react"
 
 export default function Component() {
   return (
@@ -200,7 +201,12 @@ export default function Component() {
   )
 }
 
-function BookOpenIcon(props) {
+interface IconProps {
+  className?: string
+  onClick?: () => void
+}
+
+function BookOpenIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -221,7 +227,7 @@ function BookOpenIcon(props) {
 }
 
 
-function FrameIcon(props) {
+function FrameIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -244,7 +250,7 @@ function FrameIcon(props) {
 }
 
 
-function GitBranchIcon(props) {
+function GitBranchIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -267,7 +273,7 @@ function GitBranchIcon(props) {
 }
 
 
-function GithubIcon(props) {
+function GithubIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -288,7 +294,7 @@ function GithubIcon(props) {
 }
 
 
-function HomeIcon(props) {
+function HomeIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -309,7 +315,7 @@ function HomeIcon(props) {
 }
 
 
-function LayoutPanelLeftIcon(props) {
+function LayoutPanelLeftIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -331,7 +337,7 @@ function LayoutPanelLeftIcon(props) {
 }
 
 
-function MoreHorizontalIcon(props) {
+function MoreHorizontalIcon(props: IconProps) {
   return (
     <svg
       {...props}
