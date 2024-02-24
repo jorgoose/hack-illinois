@@ -59,109 +59,142 @@ export default function Component() {
       <main className="flex flex-1 flex-col p-4 md:p-10">
         <div className="max-w-6xl w-full mx-auto grid gap-2">
           <h1 className="font-semibold text-3xl">Fuzz Testing</h1>
-          <p className="text-gray-500 dark:text-gray-400">Conducted on 23rd Feb, 2024</p>
+          <p className="text-gray-500 dark:text-gray-400">Select a repository to start fuzz testing</p>
         </div>
         <div className="grid gap-6 max-w-6xl w-full mx-auto">
-          <Card>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <HomeIcon className="w-8 h-8" />
-              <div className="grid gap-1">
-                <CardTitle>www</CardTitle>
-                <CardDescription>example.com</CardDescription>
+        {/* Example Repository Card */}
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <BookOpenIcon className="w-8 h-8" />
+            <div className="grid gap-1">
+              <CardTitle>Repository Name</CardTitle>
+              <CardDescription>repository-url.com</CardDescription>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="ml-auto" size="icon" variant="ghost">
+                  <MoreHorizontalIcon className="w-4 h-4" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>View Project</DropdownMenuItem>
+                <DropdownMenuItem>View Settings</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </CardHeader>
+          <CardContent className="flex flex-row justify-between items-center">
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-1">
+                <GithubIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">Updated 3h ago</span>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="ml-auto" size="icon" variant="ghost">
-                    <MoreHorizontalIcon className="w-4 h-4" />
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Project</DropdownMenuItem>
-                  <DropdownMenuItem>View Settings</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent className="grid gap-2">
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1">
-                  <GithubIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">3h ago</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <GitBranchIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">main</span>
-                </div>
+              <div className="flex items-center gap-1">
+                <GitBranchIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">main</span>
               </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <BookOpenIcon className="w-8 h-8" />
-              <div className="grid gap-1">
-                <CardTitle>docs</CardTitle>
-                <CardDescription>docs.example.com</CardDescription>
+              <div className="flex items-center gap-1">
+                {/* Status visual based on fuzz testing status */}
+                <span className="bg-green-500 rounded-full h-4 w-4"></span>
+                <span className="text-gray-500 dark:text-gray-400">Fuzz testing completed</span>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="ml-auto" size="icon" variant="ghost">
-                    <MoreHorizontalIcon className="w-4 h-4" />
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Project</DropdownMenuItem>
-                  <DropdownMenuItem>View Settings</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent className="grid gap-2">
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1">
-                  <GithubIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">1 day ago</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <GitBranchIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">main</span>
-                </div>
+            </div>
+            {/* Additional stats and View Report button */}
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex flex-col items-end">
+                <span className="text-gray-500 dark:text-gray-400">Functions analyzed: 50</span>
+                <span className="text-gray-500 dark:text-gray-400">Total time: 2h</span>
               </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <LayoutPanelLeftIcon className="w-8 h-8" />
-              <div className="grid gap-1">
-                <CardTitle>app</CardTitle>
-                <CardDescription>app.example.com</CardDescription>
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
+            </div>
+          </CardContent>
+        </Card>
+        {/* Repository Card with no fuzz testing */}
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <BookOpenIcon className="w-8 h-8" />
+            <div className="grid gap-1">
+              <CardTitle>Repo 1</CardTitle>
+              <CardDescription>repo1-url.com</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-2">
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-1">
+                <GithubIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">Updated 1 day ago</span>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="ml-auto" size="icon" variant="ghost">
-                    <MoreHorizontalIcon className="w-4 h-4" />
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Project</DropdownMenuItem>
-                  <DropdownMenuItem>View Settings</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent className="grid gap-2">
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1">
-                  <GithubIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">2 days ago</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <GitBranchIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">main</span>
-                </div>
+              <div className="flex items-center gap-1">
+                <GitBranchIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">main</span>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+              <div className="flex items-center gap-1">
+                <span className="bg-gray-500 rounded-full h-4 w-4"></span>
+                <span className="text-gray-500 dark:text-gray-400">No fuzz testing</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        {/* Repository Card with fuzz testing in progress */}
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <BookOpenIcon className="w-8 h-8" />
+            <div className="grid gap-1">
+              <CardTitle>Repo 2</CardTitle>
+              <CardDescription>repo2-url.com</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-2">
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-1">
+                <GithubIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">Updated 2 hours ago</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <GitBranchIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">main</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="bg-yellow-500 rounded-full h-4 w-4"></span>
+                <span className="text-gray-500 dark:text-gray-400">Fuzz testing in progress</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        {/* Repository Card with fuzz testing completed and vulnerabilities found */}
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <BookOpenIcon className="w-8 h-8" />
+            <div className="grid gap-1">
+              <CardTitle>Repo 3</CardTitle>
+              <CardDescription>repo3-url.com</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-2">
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-1">
+                <GithubIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">Updated 5 days ago</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <GitBranchIcon className="w-4 h-4" />
+                <span className="text-gray-500 dark:text-gray-400">main</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="bg-red-500 rounded-full h-4 w-4"></span>
+                <span className="text-gray-500 dark:text-gray-400">Potential vulnerabilities found</span>
+                {/* Number count of potential vulnerabilities, with warning symbol */}
+                <span className="text-red-500 dark:text-red-400">3</span>
+                {/* Additional stats for completed testing */}
+                <span className="text-gray-500 dark:text-gray-400">Functions analyzed: 65</span>
+                <span className="text-gray-500 dark:text-gray-400">Total time: 3h</span>
+                <Button className="text-blue-500 dark:text-blue-400">View Report</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       </main>
     </div>
   )
