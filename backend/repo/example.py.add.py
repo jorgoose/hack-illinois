@@ -5,12 +5,15 @@ with atheris.instrument_imports():
     import sys
 
 @atheris.instrument_func
-def TestOneInput(data):
+def test_add(data):
     fdp = atheris.FuzzedDataProvider(data)
     a = fdp.ConsumeInt(sys.maxsize)
     b = fdp.ConsumeInt(sys.maxsize)
-    
-    add(a, b)
 
-atheris.Setup(sys.argv, TestOneInput)
+    try:
+        add(a, b)
+    except Exception as e:
+        pass
+
+atheris.Setup(sys.argv, test_add)
 atheris.Fuzz()

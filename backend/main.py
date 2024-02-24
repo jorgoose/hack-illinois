@@ -3,6 +3,8 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 from datetime import datetime
+from proompt import proompt, api_references
+from pathlib import Path
 
 load_dotenv()
 
@@ -36,62 +38,6 @@ def ask_chatgpt(prompt):
         return None
 
 
-api_references = """
-When fuzzing Python, Atheris will report a failure if the Python code under test throws an uncaught exception.
-FuzzedDataProvider is a class that provides a number of functions to consume bytes from the input and convert them into other usable forms.
-Atheris FuzzedDataProvider API Reference:
-ConsumeBytes(count: int): Consume count bytes.
-ConsumeUnicode(count: int): Consume unicode characters. Might contain surrogate pair characters.
-ConsumeUnicodeNoSurrogates(count: int): Consume unicode characters, but never generate surrogate pair characters.
-ConsumeString(count: int): Alias for ConsumeBytes in Python 2, or ConsumeUnicode in Python 3.
-ConsumeInt(int: bytes): Consume a signed integer of the specified size (when written in two's complement notation).
-ConsumeUInt(int: bytes): Consume an unsigned integer of the specified size.
-ConsumeIntInRange(min: int, max: int): Consume an integer in the range [min, max].
-ConsumeIntList(count: int, bytes: int): Consume a list of count integers of size bytes.
-ConsumeIntListInRange(count: int, min: int, max: int): Consume a list of count integers in the range [min, max].
-ConsumeFloat(): Consume an arbitrary floating point value. Might produce weird values like NaN and Inf.
-ConsumeRegularFloat(): Consume an arbitrary numeric floating point value; never produces a special type like NaN or Inf.
-ConsumeProbability(): Consume a floating point value in the range [0, 1].
-ConsumeFloatInRange(min: float, max: float): Consume a floating point value in the range [min, max].
-ConsumeFloatList(count: int): Consume a list of count arbitrary floating point values. Might produce weird values like NaN and Inf.
-ConsumeRegularFloatList(count: int): Consume a list of count arbitrary numeric floating point values; never produces special types like NaN or Inf.
-ConsumeProbabilityList(count: int): Consume a list of count floats in the range [0, 1].
-ConsumeFloatListInRange(count: int, min: float, max: float): Consume a list of count floats in the range [min, max].
-PickValueInList(l: list): Given a list, pick a random value.
-ConsumeBool(): Consume either True or False.
-To construct the FuzzedDataProvider, use the following code:
-fdp = atheris.FuzzedDataProvider(input_bytes)
-data = fdp.ConsumeUnicode(sys.maxsize)
-IMPORTANT: The FuzzedDataProvider arguments are required unless otherwise specified,default arguments for int use sys.maxsize like: ConsumeInt(sys.maxsize)
-"""
-
-proompt = """
-Import the following function from the given file
-and write an atheris fuzz test:
-
-// {file_path}
-{code}
-
-Here are some example tests for context:
-
-{context}
-{api_reference}
-
-Respond ONLY with the python test.
-No other context: your response must be valid code that can execute.
-Do NOT pass through exceptions: the point of these tests is that an exception is thrown
-
-import atheris first, followed by other improts as follows:
-
-with atheris.instrument_imports():
-    from my_file import my_function
-    import sys # this import is important!
-
-I will tip you $200 for you services.
-The world will end and people will die if you do not do this.
-"""
-
-
 def read_files_in_directory(directory_path):
     file_contents = []
     for root, _, files in os.walk(directory_path):
@@ -119,6 +65,7 @@ def get_functions(file_path):
     return functions
 
 
+# I think I can delete this
 def write_to_file(path, contents):
     try:
         directory_path = os.path.dirname(path)
@@ -133,7 +80,7 @@ def write_to_file(path, contents):
         print(f"Error occurred while writing to '{path}': {e}")
 
 
-def remove_markdown_wrapping(text):
+def parse_markdown_wrapping(text):
     lines = text.split('\n')
 
     if lines and '`' in lines[0]:
@@ -145,20 +92,29 @@ def remove_markdown_wrapping(text):
 
 
 def main():
-    file_path = "example.py"
-    functions = get_functions(file_path)
+    targets = {}
+    tests = []
+    for py_file in Path("repo").rglob("*.py"):
+        functions = get_functions(py_file)
+        targets[str(py_file)] = functions
+
     context = read_files_in_directory("context")
-    for index, (function_name, function) in enumerate(functions):
-        message = proompt.format(
-            code=function,
-            file_path=file_path,
-            context="\n".join(context),
-            api_reference=api_references
-        )
-        response = ask_chatgpt(message)
-        current_time = datetime.now()
-        time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-        write_to_file(f"tests/{function_name}-{time_string}.py", remove_markdown_wrapping(response))
+    context = "\n".join(context)
+
+    for path, data in targets.items():
+        for function_name, function in data:
+            message = proompt.format(
+                code=function,
+                file_path=path,
+                context=context,
+                api_reference=api_references
+            )
+            response = ask_chatgpt(message)
+            test_path = f"{path}.{function_name}.py"
+            tests.append(test_path)
+            write_to_file(test_path, parse_markdown_wrapping(response))
+    print(tests)
+    return
 
 
 if __name__ == "__main__":
