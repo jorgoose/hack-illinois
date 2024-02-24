@@ -7,6 +7,7 @@ import { Book } from "lucide-react"
 import { use, useEffect } from "react"
 import { Octokit } from "@octokit/core"
 import { useState } from "react"
+import { formatDistanceToNow } from "date-fns"
 
 
 export default function Component() {
@@ -95,7 +96,7 @@ useEffect(() => {
             <BookOpenIcon className="w-8 h-8" />
             <div className="grid gap-1">
               <CardTitle>{repo.name}</CardTitle>
-              <CardDescription>{repo.url}</CardDescription>
+              <CardDescription>{repo.html_url}</CardDescription>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -114,7 +115,7 @@ useEffect(() => {
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">{repo.updated_at}</span>
+                <span className="text-gray-500 dark:text-gray-400">Updated {formatDistanceToNow(new Date(repo.updated_at))} ago</span>
               </div>
               <div className="flex items-center gap-1">
                 <GitBranchIcon className="w-4 h-4" />
