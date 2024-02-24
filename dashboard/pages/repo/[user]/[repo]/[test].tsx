@@ -4,7 +4,9 @@ import { CardContent, Card, CardTitle, CardHeader } from "@/components/ui/card"
 
 export default function Component() {
   return (
-    <Card className="w-full max-w-3xl p-0">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+      
+    <Card className="w-full max-w-3xl p-0 items-center">
       <CardContent className="p-0">
         <div className="border-b">
           <div className="grid items-center grid-cols-1 p-4 md:grid-cols-2 md:gap-4 md:p-6">
@@ -74,14 +76,14 @@ export default function Component() {
             <CardContent>
               <pre className="text-xs p-4 rounded-md bg-gray-50 dark:bg-gray-800">
                 AssertionError: expected true to be false at Context.it (/test/test_parse.js:6:12) at callFn
-                (/node_modules/mocha/mocha.js:5280:21) at hook (_node_modules/mocha/mocha.js:5333:10) at
-                process._tickCallback (internal/process/next_tick.js:68:7)
+                
               </pre>
             </CardContent>
           </Card>
         </div>
       </CardContent>
     </Card>
+    </div>
   )
 }
 
