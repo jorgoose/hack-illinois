@@ -103,7 +103,7 @@ export default function Component() {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
         <Link className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4" href="#">
-          <ShieldIcon className="w-6 h-6" />
+          <ShieldIcon className="w-6 h-6 text-cyan-500" />
           <span className="sr-only">Acme Inc</span>
         </Link>
         <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
@@ -293,10 +293,10 @@ function ShieldIcon(props: IconProps) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2L4 6V12C4 16.42 7.79 20.5 12 22C16.21 20.5 20 16.42 20 12V6L12 2Z" /> {/* Shield */}
-      <g transform="scale(0.06) translate(105, 135)"> {/* Smiley, scaled and positioned to fit in the shield */}
-        <circle cx="61" cy="72" r="12" fill="currentColor" /> {/* Left eye */}
-        <circle cx="127" cy="72" r="12" fill="currentColor" /> {/* Right eye */}
-        <path d="M50 110 Q 95 160 140 110" fill="none" stroke="currentColor" strokeWidth="15" /> {/* Mouth */}      </g>
+      <g transform="scale(0.05) translate(145, 215)"> {/* Smiley, scaled and positioned to fit in the shield */}
+        <circle cx="41" cy="32" r="15" fill="currentColor" /> {/* Left eye */}
+        <circle cx="147" cy="32" r="15" fill="currentColor" /> {/* Right eye */}
+        <path d="M50 80 Q 95 150 140 80" fill="none" stroke="currentColor" strokeWidth="25" /> {/* Mouth */}      </g>
     </svg>
   );
 }
