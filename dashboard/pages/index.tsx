@@ -39,6 +39,9 @@ export default function Component() {
     name: string
     html_url: string
     updated_at: string
+    owner: {
+      login: string
+    }
   }
 
   interface FuzzingStatus {
@@ -128,7 +131,7 @@ export default function Component() {
           {/* tmp */}
         </div>
         <div className="grid gap-6 max-w-6xl w-full mx-auto">
-        {repositories.map(repo => (
+        {repositories.map((repo: Repository) => (
         <Card key={repo.id}>
           <CardHeader className="flex flex-row items-center gap-4">
             <BookOpenIcon className="w-8 h-8" />
