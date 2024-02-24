@@ -3,3 +3,7 @@ __pycache__/
 *$py.class
 venv/
 .env
+coverage/
+crashes/
+tests/
+results.json
