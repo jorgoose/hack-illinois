@@ -13,12 +13,12 @@ client = OpenAI(api_key=os.getenv("OPEN_AI_API_KEY"))
 
 
 def ask_chatgpt(prompt):
-    current_time = datetime.now()
-    time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-    file_name = f"file_{time_string}.txt"
-
-    with open(file_name, "w") as file:
-        file.write(prompt)
+    # current_time = datetime.now()
+    # time_string = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+    # file_name = f"file_{time_string}.txt"
+    #
+    # with open(file_name, "w") as file:
+    #     file.write(prompt)
 
     try:
         response = client.chat.completions.create(
@@ -27,15 +27,16 @@ def ask_chatgpt(prompt):
                 "content": prompt
             }],
             model="gpt-3.5-turbo"
+            # model="gpt-4"
         )
         response = response.choices[0].message.content
-        with open(file_name, "a") as file:
-            file.write(response)
+        # with open(file_name, "a") as file:
+        #     file.write(response)
         return response
     except Exception as e:
         print("Error:", e)
-        with open(file_name, "a") as file:
-            file.write(e)
+        # with open(file_name, "a") as file:
+        #     file.write(e)
         return None
 
 

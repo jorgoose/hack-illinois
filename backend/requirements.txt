@@ -1,3 +1,4 @@
 atheris
 openai
 python-dotenv
+coverage
