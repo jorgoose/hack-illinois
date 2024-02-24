@@ -32,6 +32,12 @@ useEffect(() => {
   fetchRepositories();
 }, []);
 
+  interface Repository {
+    id: number
+    name: string
+    html_url: string
+    updated_at: string
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -90,55 +96,54 @@ useEffect(() => {
           <p className="text-gray-500 dark:text-gray-400">Select a repository to start fuzz testing</p>
         </div>
         <div className="grid gap-6 max-w-6xl w-full mx-auto">
-        {repositories.map(repo => (
-        <Card key={repo.id}>
-          <CardHeader className="flex flex-row items-center gap-4">
-            <BookOpenIcon className="w-8 h-8" />
-            <div className="grid gap-1">
-              <CardTitle>{repo.name}</CardTitle>
-              <CardDescription>{repo.html_url}</CardDescription>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="ml-auto" size="icon" variant="ghost">
-                  <MoreHorizontalIcon className="w-4 h-4" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>View Project</DropdownMenuItem>
-                <DropdownMenuItem>View Settings</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </CardHeader>
-          <CardContent className="flex flex-row justify-between items-center">
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <GithubIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">Updated {formatDistanceToNow(new Date(repo.updated_at))} ago</span>
+          {repositories.map((repo: Repository) => (
+          <Card key={repo.id}>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <BookOpenIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>{repo.name}</CardTitle>
+                <CardDescription>{repo.html_url}</CardDescription>
               </div>
-              <div className="flex items-center gap-1">
-                <GitBranchIcon className="w-4 h-4" />
-                <span className="text-gray-500 dark:text-gray-400">main</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="ml-auto" size="icon" variant="ghost">
+                    <MoreHorizontalIcon className="w-4 h-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View Project</DropdownMenuItem>
+                  <DropdownMenuItem>View Settings</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardHeader>
+            <CardContent className="flex flex-row justify-between items-center">
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-1">
+                  <GithubIcon className="w-4 h-4" />
+                  <span className="text-gray-500 dark:text-gray-400">Updated {formatDistanceToNow(new Date(repo.updated_at))} ago</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <GitBranchIcon className="w-4 h-4" />
+                  <span className="text-gray-500 dark:text-gray-400">main</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {/* Status visual based on fuzz testing status */}
+                  <span className="bg-green-500 rounded-full h-4 w-4"></span>
+                  <span className="text-gray-500 dark:text-gray-400">Fuzz testing completed</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                {/* Status visual based on fuzz testing status */}
-                <span className="bg-green-500 rounded-full h-4 w-4"></span>
-                <span className="text-gray-500 dark:text-gray-400">Fuzz testing completed</span>
+              {/* Additional stats and View Report button */}
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex flex-col items-end">
+                  <span className="text-gray-500 dark:text-gray-400">Functions analyzed: 50</span>
+                  <span className="text-gray-500 dark:text-gray-400">Total time: 2h</span>
+                </div>
+                <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
               </div>
-            </div>
-            {/* Additional stats and View Report button */}
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex flex-col items-end">
-                <span className="text-gray-500 dark:text-gray-400">Functions analyzed: 50</span>
-                <span className="text-gray-500 dark:text-gray-400">Total time: 2h</span>
-              </div>
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         ))}
-       
       </div>
 
       </main>
