@@ -179,7 +179,7 @@ export default function Component() {
                   <span className="text-gray-500 dark:text-gray-400">Total time: {fuzzingStatus.totalTime}</span>
                 </div>
                 {fuzzingStatus.reportUrl && (
-                  <Link href={fuzzingStatus.reportUrl}>
+                  <Link href={"/repo/" + repo.owner.login + "/" + repo.name}>
                     <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
                   </Link>
                 )}
