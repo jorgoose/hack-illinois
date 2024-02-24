@@ -25,6 +25,7 @@ export default function RepoPage() {
   const router = useRouter();
   const { user, repo } = router.query;
   const [repository, setRepository] = useState(null);
+  const [coverage, setCoverage] = useState(false);
 
   useEffect(() => {
     const fetchRepository = async () => {
@@ -62,20 +63,68 @@ export default function RepoPage() {
           </div>
           <nav className="flex items-center justify-end gap-4 text-sm md:gap-6">
             <div className="flex items-center gap-2">
-              <CalendarClockIcon className="w-4 h-4" />
-              <span className="font-medium">Tests</span>
+                <CalendarClockIcon className="w-4 h-4" />
+                <span className="font-medium" onClick={() => setCoverage(false)} style={{ cursor: 'pointer' }}>Tests</span>
             </div>
             <div className="flex items-center gap-2">
-              <FileIcon className="w-4 h-4" />
-              <span className="font-medium">Coverage</span>
+                <FileIcon className="w-4 h-4" />
+                <span className="font-medium" onClick={() => setCoverage(true)} style={{ cursor: 'pointer' }}>Coverage</span>
             </div>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <AlertTriangleIcon className="w-4 h-4" />
               <span className="font-medium">Issues</span>
-            </div>
+            </div> */}
           </nav>
         </div>
       </div>
+      {coverage && (<div className="flex flex-col gap-4 p-4">
+    <h1 className="text-2xl font-semibold tracking-tighter">Code Coverage Report</h1>
+    <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-1.5">
+        <h2 className="text-base font-medium tracking-tighter">Overall Code Coverage</h2>
+        <p className="text-3xl font-bold tracking-tighter">87%</p>
+      </div>
+      <div className="w-1/3">{/* Placeholder for any additional content */}</div>
+    </div>
+  <div className="flex flex-col gap-4">
+
+    <Card>
+      <div className="grid w-full p-4 gap-4 text-xs md:grid-cols-[1fr_100px_100px_100px_100px] lg:grid-cols-[1fr_100px_100px_100px_100px]">
+        <div className="font-medium">File</div>
+        <div className="font-medium">Statements</div>
+        <div className="font-medium">Branches</div>
+        <div className="font-medium">Functions</div>
+        <div className="font-medium">Lines</div>
+        <div className="font-medium">Coverage</div>
+        <div className="font-medium">Branches</div>
+        <div className="font-medium">Functions</div>
+        <div className="font-medium">Lines</div>
+        <div>src/index.js</div>
+        <div>80%</div>
+        <div>90%</div>
+        <div>70%</div>
+        <div>75%</div>
+        <div className="flex items-center gap-2">
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <span>80%</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <span>90%</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <span>70%</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <span>75%</span>
+        </div>
+      </div>
+    </Card>
+
+    </div>
+    </div>)}{!coverage && (
       <div className="flex-1 bg-gray-100/40 dark:bg-gray-800/40 p-4">
         <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-2">
           <Card>
@@ -171,7 +220,8 @@ export default function RepoPage() {
               </DropdownMenuTrigger>
             <DropdownMenuContent align="end" onClick={() => handleTestCaseClick(1)}>
                 <DropdownMenuItem>View Details</DropdownMenuItem>
-                {/* Add options as needed */}
+                <DropdownMenuItem>Run Again</DropdownMenuItem>
+                <DropdownMenuItem>Delete Test</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </CardHeader>
@@ -183,8 +233,10 @@ export default function RepoPage() {
         
         {/* Add more cards for other test cases as needed */}
       </div>
+
+
+        </div>)}
         </div>
-      </div>
     </div>
   );
 }
@@ -214,6 +266,25 @@ function AlertTriangleIcon(props: IconProps) {
     </svg>
   );
 }
+function CheckCircleIcon(props: IconProps) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+    )
+  }
 
 function CalendarClockIcon(props: IconProps) {
   return (
