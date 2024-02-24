@@ -11,26 +11,27 @@ import { formatDistanceToNow } from "date-fns"
 
 
 export default function Component() {
-const [repositories, setRepositories] = useState([])
+  
+  const [repositories, setRepositories] = useState([])
 
-useEffect(() => {
-  const fetchRepositories = async () => {
-    const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
-    });
+  useEffect(() => {
+    const fetchRepositories = async () => {
+      const octokit = new Octokit({
+        auth: process.env.GITHUB_TOKEN,
+      });
 
-    const response = await octokit.request("GET /users/kygoben/repos", {
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    });
+      const response = await octokit.request("GET /users/kygoben/repos", {
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      });
 
-    setRepositories(response.data);
-    console.log(response.data);
-  };
+      setRepositories(response.data);
+      console.log(response.data);
+    };
 
-  fetchRepositories();
-}, []);
+    fetchRepositories();
+  }, []);
 
   interface Repository {
     id: number
