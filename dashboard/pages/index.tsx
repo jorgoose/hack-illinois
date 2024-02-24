@@ -46,7 +46,9 @@ export default function Component() {
 
   interface FuzzingStatus {
     status: "completed" | "in-progress" | "failed" | "not-started"
+    foundVulnerabilities: boolean
     functionsAnalyzed: number
+    vulnerabilitiesFound: number
     totalTime: string
     reportUrl: string
   }
@@ -57,19 +59,32 @@ export default function Component() {
     // If repo.name == "agrepair", return example status
     // Otherwise, return no started status
 
-    if (repo.name !== "agrepair") {
+    if (repo.name === "agrepair") {
       return {
-        status: "not-started",
+        status: "completed",
+        foundVulnerabilities: false,
         functionsAnalyzed: 0,
-        totalTime: "0s",
+        totalTime: "3h 45m",
+        reportUrl: "",
+      }
+    }
+
+    else if (repo.name === "insuriquest") {
+      return {
+        status: "completed",
+        foundVulnerabilities: true,
+        functionsAnalyzed: 0,
+        totalTime: "3h 45m",
         reportUrl: "",
       }
     }
 
     return {
-      status: "completed",
+      status: "not-started",
       functionsAnalyzed: 100,
-      totalTime: "3h 45m",
+      foundVulnerabilities: false,
+      vulnerabilitiesFound: 0,
+      totalTime: "",
       reportUrl: "https://example.com",
     }
     
