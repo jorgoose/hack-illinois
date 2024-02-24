@@ -10,11 +10,11 @@ export default function SignIn() {
     const { Octokit } = require("@octokit/core");
 
     const octokit = new Octokit({
-      auth: "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",
+      auth: "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",
     });
 
     console.log(
-      await octokit.request("GET /user/repos", {
+      await octokit.request("GET /repositories", {
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
