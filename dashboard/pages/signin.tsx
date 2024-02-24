@@ -14,7 +14,7 @@ export default function SignIn() {
     });
 
     console.log(
-      await octokit.request("GET /repositories", {
+      await octokit.request("GET /users/kygoben/repos", {
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
