@@ -43,7 +43,7 @@ useEffect(() => {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
         <Link className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4" href="#">
-          <FrameIcon className="w-6 h-6" />
+          <ShieldIcon className="w-6 h-6" />
           <span className="sr-only">Acme Inc</span>
         </Link>
         <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
@@ -92,8 +92,7 @@ useEffect(() => {
       </header>
       <main className="flex flex-1 flex-col p-4 md:p-10">
         <div className="max-w-6xl w-full mx-auto grid gap-2">
-          <h1 className="font-semibold text-3xl">Fuzz Testing</h1>
-          <p className="text-gray-500 dark:text-gray-400">Select a repository to start fuzz testing</p>
+          {/* tmp */}
         </div>
         <div className="grid gap-6 max-w-6xl w-full mx-auto">
           {repositories.map((repo: Repository) => (
@@ -195,6 +194,26 @@ function FrameIcon(props: IconProps) {
       <line x1="22" x2="2" y1="18" y2="18" />
       <line x1="6" x2="6" y1="2" y2="22" />
       <line x1="18" x2="18" y1="2" y2="22" />
+    </svg>
+  )
+}
+
+function ShieldIcon(props: IconProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 2L4 6V12C4 16.42 7.79 20.5 12 22C16.21 20.5 20 16.42 20 12V6L12 2Z" />
+      <circle cx="12" cy="12" r="4" />
     </svg>
   )
 }
