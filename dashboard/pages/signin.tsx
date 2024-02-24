@@ -10,7 +10,7 @@ export default function SignIn() {
     const { Octokit } = require("@octokit/core");
 
     const octokit = new Octokit({
-      auth: "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",
+      auth: "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",
     });
 
     console.log(
