@@ -11,7 +11,7 @@ import { formatDistanceToNow } from "date-fns"
 
 
 export default function Component() {
-  
+
   const [repositories, setRepositories] = useState([])
 
   useEffect(() => {
@@ -33,11 +33,43 @@ export default function Component() {
     fetchRepositories();
   }, []);
 
+
   interface Repository {
     id: number
     name: string
     html_url: string
     updated_at: string
+  }
+
+  interface FuzzingStatus {
+    status: "completed" | "in-progress" | "failed" | "not-started"
+    functionsAnalyzed: number
+    totalTime: string
+    reportUrl: string
+  }
+
+  function getRepoFuzzingStatus(repo: Repository) {
+
+    // TODO: Proper logic
+    // If repo.name == "agrepair", return example status
+    // Otherwise, return no started status
+
+    if (repo.name === "agrepair") {
+      return {
+        status: "completed",
+        functionsAnalyzed: 50,
+        totalTime: "2h",
+        reportUrl: "https://example.com",
+      }
+    }
+
+    return {
+      status: "not-started",
+      functionsAnalyzed: 0,
+      totalTime: "0h",
+      reportUrl: "",
+    }
+    
   }
 
   return (
