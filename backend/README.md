@@ -7,5 +7,5 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 ```bash
-pip install atheris
+pip install -r requirements.txt
 ```
