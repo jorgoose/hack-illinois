@@ -6,6 +6,7 @@ import { Octokit } from "@octokit/core";
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 
 export default function RepoPage() {
@@ -59,6 +60,81 @@ export default function RepoPage() {
         </div>
       </div>
       <div className="flex-1 bg-gray-100/40 dark:bg-gray-800/40">
+      <div className="grid gap-4 md:grid-cols-2">
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <BoxIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>Test Suite</CardTitle>
+                <CardDescription>Integration Tests</CardDescription>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="ml-auto" size="icon" variant="ghost">
+                    <MoreHorizontalIcon className="w-4 h-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View Suite</DropdownMenuItem>
+                  <DropdownMenuItem>Run Again</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              <div className="grid gap-2">
+                <div className="grid grid-cols-2 items-center gap-2">
+                  <div>Tests</div>
+                  <div className="text-right">25</div>
+                </div>
+                <div className="grid grid-cols-2 items-center gap-2">
+                  <div>Passed</div>
+                  <div className="text-right">20</div>
+                </div>
+                <div className="grid grid-cols-2 items-center gap-2">
+                  <div>Failed</div>
+                  <div className="text-right">5</div>
+                </div>
+              </div>
+              <div />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-4">
+              <AlertTriangleIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>Issues Found</CardTitle>
+                <CardDescription>Security Vulnerabilities</CardDescription>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="ml-auto" size="icon" variant="ghost">
+                    <MoreHorizontalIcon className="w-4 h-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View Issues</DropdownMenuItem>
+                  <DropdownMenuItem>Resolve</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              <div className="grid grid-cols-2 items-center gap-2">
+                <div>High</div>
+                <div className="text-right">2</div>
+              </div>
+              <div className="grid grid-cols-2 items-center gap-2">
+                <div>Medium</div>
+                <div className="text-right">3</div>
+              </div>
+              <div className="grid grid-cols-2 items-center gap-2">
+                <div>Low</div>
+                <div className="text-right">1</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         <div className="max-w-6xl w-full mx-auto grid gap-4 p-4 md:gap-8 md:p-10">
           <div className="grid gap-2">
             <h1 className="font-semibold text-3xl">Tests</h1>
@@ -365,3 +441,24 @@ function TerminalIcon(props) {
     </svg>
   )
 }
+
+function BoxIcon(props) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+        <path d="m3.3 7 8.7 5 8.7-5" />
+        <path d="M12 22V12" />
+      </svg>
+    )
+  }
