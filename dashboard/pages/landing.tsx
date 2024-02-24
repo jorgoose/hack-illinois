@@ -4,51 +4,40 @@ import { Button } from '@/components/ui/button';
 export default function LandingPage() {
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white">
-          <header className="flex items-center h-16 px-4 bg-gray-800 border-b border-gray-700 shrink-0 md:px-6">
-            <Link href="/" className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4">
-              <ShieldIcon className="w-6 h-6 text-cyan-500" />
-              <span>FuzzGuard</span>
-            </Link>
-            <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
-              {/* Add navigation links here */}
-            </nav>
-          </header>
           <main className="flex flex-1 flex-col p-4 md:p-10">
             <div className="max-w-6xl w-full mx-auto grid gap-2">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold">Welcome to FuzzGuard</h1>
-                <p className="mt-4 text-lg">
+              <div className="text-center mb-10 pt-32">
+                <div className="flex justify-center mb-8">
+                  <ShieldIcon className="w-20 h-20 text-cyan-500" />
+                  <h1 className="text-7xl font-bold ml-4">Fuzz<span className="text-cyan-500">Guard</span></h1>
+                </div>
+                <p className="text-2xl">
                   Automate fuzz testing on your code repositories without manual work.
                 </p>
-                <Link href="/">
-                  <Button className="mt-6 bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded">
-                    Go to Dashboard
-                  </Button>
-                </Link>
               </div>
-              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-gray-800 shadow rounded p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-800 shadow-xl rounded-lg p-6">
                   <GithubIcon className="w-12 h-12 text-gray-400" />
                   <h2 className="mt-4 text-xl font-semibold">Log in with GitHub</h2>
                   <p className="mt-2 text-gray-400">
                     Easily authenticate and link your GitHub account.
                   </p>
                 </div>
-                <div className="bg-gray-800 shadow rounded p-6">
+                <div className="bg-gray-800 shadow-xl rounded-lg p-6">
                   <CheckCircleIcon className="w-12 h-12 text-green-500" />
                   <h2 className="mt-4 text-xl font-semibold">View and Select a Repository</h2>
                   <p className="mt-2 text-gray-400">
                     Browse and select any of your repositories for automated fuzz testing.
                   </p>
                 </div>
-                <div className="bg-gray-800 shadow rounded p-6">
+                <div className="bg-gray-800 shadow-xl rounded-lg p-6">
                   <CoffeeIcon className="w-12 h-12 text-yellow-500"/>
                   <h2 className="mt-4 text-xl font-semibold">Sit Back and Relax</h2>
                   <p className="mt-2 text-gray-400">
                     We perform automated fuzz testing while you focus on other tasks.
                   </p>
                 </div>
-                <div className="bg-gray-800 shadow rounded p-6">
+                <div className="bg-gray-800 shadow-xl rounded-lg p-6">
                   <ShieldIcon className="w-12 h-12 text-cyan-500" />
                   <h2 className="mt-4 text-xl font-semibold">View Analytics and Reporting</h2>
                   <p className="mt-2 text-gray-400">
@@ -56,11 +45,24 @@ export default function LandingPage() {
                   </p>
                 </div>
               </div>
+              <div className="text-center">
+                <Link href="/">
+                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white py-8 px-12 rounded-lg text-xl font-semibold shadow-lg">
+                    Get Started
+                  </Button>
+                </Link>
+                <Link href="/">
+                  <Button className="ml-4 bg-transparent hover:bg-gray-700 text-white py-8 px-12 rounded-lg text-xl font-semibold border border-gray-500 hover:border-transparent shadow-lg">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
             </div>
           </main>
         </div>
     );
 }
+
 
 interface IconProps {
     className?: string;
