@@ -291,22 +291,14 @@ function FrameIcon(props: IconProps) {
 
 function ShieldIcon(props: IconProps) {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 2L4 6V12C4 16.42 7.79 20.5 12 22C16.21 20.5 20 16.42 20 12V6L12 2Z" />
-      <circle cx="12" cy="12" r="4" />
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L4 6V12C4 16.42 7.79 20.5 12 22C16.21 20.5 20 16.42 20 12V6L12 2Z" /> {/* Shield */}
+      <g transform="scale(0.06) translate(105, 135)"> {/* Smiley, scaled and positioned to fit in the shield */}
+        <circle cx="61" cy="72" r="12" fill="currentColor" /> {/* Left eye */}
+        <circle cx="127" cy="72" r="12" fill="currentColor" /> {/* Right eye */}
+        <path d="M50 110 Q 95 160 140 110" fill="none" stroke="currentColor" strokeWidth="15" /> {/* Mouth */}      </g>
     </svg>
-  )
+  );
 }
 
 // Check mark circle icon
