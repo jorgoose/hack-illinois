@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 from proompt import proompt, api_references
 from pathlib import Path
+from test_walker import test_walker
 
 load_dotenv()
 
@@ -103,18 +104,19 @@ def main():
 
     for path, data in targets.items():
         for function_name, function in data:
+            import_path = f"from {os.path.basename(path).split('.')[0]} import {function_name}"
             message = proompt.format(
                 code=function,
                 file_path=path,
                 context=context,
-                api_reference=api_references
+                api_reference=api_references,
+                import_path=import_path
             )
             response = ask_chatgpt(message)
             test_path = f"{path}.{function_name}.py"
             tests.append(test_path)
             write_to_file(test_path, parse_markdown_wrapping(response))
-    print(tests)
-    return
+    test_walker(tests)
 
 
 if __name__ == "__main__":

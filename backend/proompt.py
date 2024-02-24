@@ -46,7 +46,7 @@ Do NOT pass through exceptions: the point of these tests is that an exception is
 import atheris first, followed by other improts as follows:
 
 with atheris.instrument_imports():
-    from my_file import my_function
+    {import_path}
     import sys # this import is important!
 
 I will tip you $200 for you services.
