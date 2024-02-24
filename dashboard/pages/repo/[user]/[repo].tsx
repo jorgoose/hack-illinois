@@ -35,6 +35,10 @@ export default function RepoPage() {
     return <div>Loading...</div>;
   }
 
+  const handleTestCaseClick = (testCaseId: any) => {
+    router.push(`/repo/${user}/${repo}/${testCaseId}`);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="border-b bg-white dark:bg-gray-950 border-gray-100/40 dark:border-gray-800/40">
@@ -148,6 +152,11 @@ export default function RepoPage() {
                   <Badge className="bg-white dark:bg-gray-950" variant="outline">
                     Current
                   </Badge>
+                </div>
+                <div className="grid gap-1 flex-1" onClick={() => handleTestCaseClick(1)}>
+                             
+                    <div className="font-semibold cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Details Here...</div>
+                  
                 </div>
               </div>
               <Separator className="my-2 lg:my-0" />
