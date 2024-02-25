@@ -256,27 +256,9 @@ export default function RepoPage() {
                             Time Elapsed: {test.time} seconds
                           </CardDescription>
                         </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              className="ml-auto"
-                              size="icon"
-                              variant="ghost"
-                            >
-                              <MoreHorizontalIcon className="w-4 h-4" />
-                              <span className="sr-only">Toggle menu</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View Details</DropdownMenuItem>
-                            <DropdownMenuItem>Run Again</DropdownMenuItem>
-                            <DropdownMenuItem>Delete Test</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                      <div>Status: {test.status}</div>
                       </CardHeader>
-                      <CardContent className="grid gap-2">
-                        <div>Status: {test.status}</div>
-                      </CardContent>
+                      
                       <div className="flex flex-col items-center justify-center w-full h-full gap-4">
                         <Card className="w-full max-w-3xl p-0 items-center">
                           <CardContent className="p-0">
