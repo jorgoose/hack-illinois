@@ -128,7 +128,7 @@ export default function Component() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white">
       <header className="flex items-center h-16 px-4 bg-gray-800 border-b border-gray-700 shrink-0 md:px-6">
-        <Link className="flex items-center gap-1 text-lg font-semibold sm:text-base mr-8" href="#">
+        <Link className="flex items-center gap-1 text-lg font-semibold sm:text-base mr-8" href="/landing">
           <ShieldIcon className="w-8 h-8 text-cyan-500" />
           <span className="text-xl font-bold">Fuzz<span className="text-cyan-500">Guard</span></span>
         </Link>
