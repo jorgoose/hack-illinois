@@ -128,24 +128,21 @@ export default function Component() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white">
       <header className="flex items-center h-16 px-4 bg-gray-800 border-b border-gray-700 shrink-0 md:px-6">
-        <Link className="flex items-center gap-4 text-lg font-semibold sm:text-base mr-4" href="#">
-          <ShieldIcon className="w-10 h-10 text-cyan-500" />
+        <Link className="flex items-center gap-1 text-lg font-semibold sm:text-base mr-8" href="#">
+          <ShieldIcon className="w-8 h-8 text-cyan-500" />
           <span className="text-xl font-bold">Fuzz<span className="text-cyan-500">Guard</span></span>
         </Link>
         <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
-          <Link className="font-bold" href="#">
+          <Link className="font-bold mt-1" href="#">
             Projects
           </Link>
-          <Link className="text-gray-400" href="#">
-            Deployments
+          <Link className="text-gray-400 mt-1" href="#">
+            Reports
           </Link>
-          <Link className="text-gray-400" href="#">
-            Analytics
-          </Link>
-          <Link className="text-gray-400" href="#">
+          <Link className="text-gray-400 mt-1" href="#">
             Logs
           </Link>
-          <Link className="text-gray-400" href="#">
+          <Link className="text-gray-400 mt-1" href="#">
             Settings
           </Link>
         </nav>
