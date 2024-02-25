@@ -55,7 +55,6 @@ def get_functions(file_path):
     return functions
 
 
-# I think I can delete this
 def write_to_file(path, contents):
     try:
         directory_path = os.path.dirname(path)
@@ -82,9 +81,10 @@ def parse_markdown_wrapping(text):
 
 
 def main():
+    TARGET_DIR = "repo"
     targets = {}
     tests = []
-    for py_file in Path("repo").rglob("*.py"):
+    for py_file in Path(TARGET_DIR).rglob("*.py"):
         functions = get_functions(py_file)
         targets[str(py_file)] = functions
 
@@ -105,8 +105,10 @@ def main():
             test_path = f"{path}.{function_name}.fuzz-guard.py"
             tests.append(test_path)
             write_to_file(test_path, parse_markdown_wrapping(response))
-    test_walker(tests)
+    test_walker(tests, TARGET_DIR)
 
 
-def lambda_handler(event, context):
+if __name__ == "__main__":
     main()
+# def lambda_handler(event, context):
+#     main()
