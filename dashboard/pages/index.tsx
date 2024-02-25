@@ -275,7 +275,7 @@ export default function Component() {
                         <Link
                           href={"/repo/" + repo.owner.login + "/" + repo.name}
                         >
-                          <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                          <Button className="bg-cyan-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                             View Report
                           </Button>
                         </Link>
