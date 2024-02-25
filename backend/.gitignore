@@ -7,3 +7,4 @@ coverage/
 crashes/
 tests/
 results.json
+lambda_dir
