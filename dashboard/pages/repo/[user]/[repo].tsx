@@ -252,7 +252,7 @@ const supabase = createClient<Database>(supabaseUrl, supabaseKey);
                   </Button>
                 </DropdownMenuTrigger>
                 {/* Dropdown menu content */}
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" onClick={() => handleTestCaseClick(test.id)}>
                   <DropdownMenuItem>View Details</DropdownMenuItem>
                   <DropdownMenuItem>Run Again</DropdownMenuItem>
                   <DropdownMenuItem>Delete Test</DropdownMenuItem>
