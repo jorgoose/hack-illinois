@@ -12,7 +12,7 @@ export default function LandingPage() {
                   <h1 className="text-7xl font-bold ml-4">Fuzz<span className="text-cyan-500">Guard</span></h1>
                 </div>
                 <p className="text-2xl">
-                  Automate fuzz testing on your code repositories without manual work.
+                    Automated and scalable fuzz testing for your repositories to detect potential vulnerabilities.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
