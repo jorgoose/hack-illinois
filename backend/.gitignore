@@ -7,3 +7,5 @@ coverage/
 crashes/
 tests/
 results.json
+lambda_dir
+fuzz_guard.zip
