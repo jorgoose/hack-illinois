@@ -36,7 +36,7 @@ export default function RepoPage() {
 
 
 const supabaseUrl = 'https://enobxhmkgvnegrpndfqn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVub2J4aG1rZ3ZuZWdycG5kZnFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg4MjIwMTQsImV4cCI6MjAyNDM5ODAxNH0.nmADebInnFNVSa6eqeQypKNmzx0vFi0R-iXOiCc6S0E';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY!;
 
 const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
