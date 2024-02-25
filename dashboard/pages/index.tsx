@@ -109,15 +109,15 @@ export default function Component() {
     if (repo.name === "ultra-secure-python-code") {
       return {
         status: "completed",
-        foundVulnerabilities: false,
-        functionsAnalyzed: 47,
-        totalTime: "3h 45m",
+        foundVulnerabilities: true,
+        functionsAnalyzed: 4,
+        totalTime: "6m",
         reportUrl: "done",
       };
     } else if (repo.name === "insuriquest") {
       return {
         status: "completed",
-        foundVulnerabilities: true,
+        foundVulnerabilities: false,
         functionsAnalyzed: 0,
         totalTime: "3h 45m",
         reportUrl: "done",
@@ -252,7 +252,7 @@ export default function Component() {
                           )}
                           <span className="text-gray-400">
                             {fuzzingStatus.foundVulnerabilities
-                              ? "Vulnerabilities found"
+                              ? "Potential vulnerabilities found"
                               : "No vulnerabilities found"}
                           </span>
                         </>
