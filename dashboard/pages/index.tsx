@@ -17,9 +17,29 @@ export default function Component() {
     avatar_url: string
   }
 
+  interface Repository {
+    id: number
+    name: string
+    html_url: string
+    updated_at: string
+    owner: {
+      login: string
+      avatar_url: string
+    }
+  }
+
+  interface FuzzingStatus {
+    status: "completed" | "in-progress" | "failed" | "not-started"
+    foundVulnerabilities: boolean
+    functionsAnalyzed: number
+    vulnerabilitiesFound: number
+    totalTime: string
+    reportUrl: string
+  }
+
   const [githubUser, setGithubUser] = useState({} as GitHubUser)
 
-  const [repositories, setRepositories] = useState([])
+  const [repositories, setRepositories] = useState([] as Repository[])
 
   useEffect(() => {
     const fetchRepositories = async () => {
@@ -34,20 +54,14 @@ export default function Component() {
       });
 
       // This code is so jank lol
-      // Move the repository with the name "Ultra-Secure-Python-Code" to the first position in the array
+      // Move the repository with the name "ultra-secure-python-code" to the first position in the array
       // This is a temporary solution to make sure the repository is always displayed first
-      // This updated version should be stored in the state, using a copy
-
-      const updatedRepos = response.data.sort((a: Repository, b: Repository) => {
-        if (a.name === "ultra-secure-python-code") {
-          return -1;
-        }
-        return 0;
+      const r = response.data.sort((a: Repository, b: Repository) => {
+        return a.name === "ultra-secure-python-code" ? -1 : 1
       });
 
-      setRepositories(updatedRepos);
-      setGithubUser(updatedRepos[0].owner.login);
-      console.log(response.data);
+      setRepositories(r);
+      setGithubUser(response.data[0].owner);
     };
 
     fetchRepositories();
@@ -73,27 +87,6 @@ export default function Component() {
     `;
     document.head.appendChild(style);
   }, []);
-
-
-  interface Repository {
-    id: number
-    name: string
-    html_url: string
-    updated_at: string
-    owner: {
-      login: string
-      avatar_url: string
-    }
-  }
-
-  interface FuzzingStatus {
-    status: "completed" | "in-progress" | "failed" | "not-started"
-    foundVulnerabilities: boolean
-    functionsAnalyzed: number
-    vulnerabilitiesFound: number
-    totalTime: string
-    reportUrl: string
-  }
 
   function getRepoFuzzingStatus(repo: Repository) {
 
