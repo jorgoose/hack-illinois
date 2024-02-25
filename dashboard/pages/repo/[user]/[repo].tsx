@@ -20,12 +20,25 @@ import {
   DropdownMenuContent,
   DropdownMenu,
 } from "@/components/ui/dropdown-menu";
+import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
+import { createClient } from '@supabase/supabase-js';
 
 export default function RepoPage() {
   const router = useRouter();
   const { user, repo } = router.query;
   const [repository, setRepository] = useState(null);
   const [coverage, setCoverage] = useState(false);
+    const [tests, setTests] = useState(null);
+
+
+
+const supabaseUrl = 'https://enobxhmkgvnegrpndfqn.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVub2J4aG1rZ3ZuZWdycG5kZnFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg4MjIwMTQsImV4cCI6MjAyNDM5ODAxNH0.nmADebInnFNVSa6eqeQypKNmzx0vFi0R-iXOiCc6S0E';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Now you can use the 'supabase' object to interact with your Supabase project
+
 
   useEffect(() => {
     const fetchRepository = async () => {
@@ -40,8 +53,22 @@ export default function RepoPage() {
       }
     };
 
+    const fetchTests = async () => {
+        let { data: tests, error } = await supabase
+        .from('tests')
+        .select('*')
+        .eq('repo', 'ultra-secure-python-code');
+        setTests(tests);
+        console.log(tests, error);
+    }
+
     fetchRepository();
+    
+    fetchTests();
+    
+    
     console.log(user, repository);
+    console.log(tests);
   }, [user, repo]);
 
   if (!repository) {
@@ -203,33 +230,40 @@ export default function RepoPage() {
           </div>
           <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-1">
         {/* Example test case card */}
-        <Card>
-          <CardHeader className="flex flex-row items-center gap-4">
-            {/* Icon */}
-            <GitCommitIcon className="w-8 h-8" />
-            <div className="grid gap-1">
-              <CardTitle>Test Case Name</CardTitle>
-              <CardDescription>Time Completed: 10:30 AM</CardDescription>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="ml-auto" size="icon" variant="ghost">
-                  <MoreHorizontalIcon className="w-4 h-4" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" onClick={() => handleTestCaseClick(1)}>
-                <DropdownMenuItem>View Details</DropdownMenuItem>
-                <DropdownMenuItem>Run Again</DropdownMenuItem>
-                <DropdownMenuItem>Delete Test</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            {/* Additional information about the test case */}
-            Test Failed
-          </CardContent>
-        </Card>
+        <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-1">
+        {tests && tests.map((test, index) => (
+          <Card key={index}>
+            <CardHeader className="flex flex-row items-center gap-4">
+              {/* Icon */}
+              <GitCommitIcon className="w-8 h-8" />
+              <div className="grid gap-1">
+                <CardTitle>{test.code}</CardTitle>
+                <CardDescription>Time Completed: {test.timestamp}</CardDescription>
+              </div>
+              {/* Dropdown menu for additional actions */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="ml-auto" size="icon" variant="ghost">
+                    <MoreHorizontalIcon className="w-4 h-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                {/* Dropdown menu content */}
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View Details</DropdownMenuItem>
+                  <DropdownMenuItem>Run Again</DropdownMenuItem>
+                  <DropdownMenuItem>Delete Test</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardHeader>
+            <CardContent className="grid gap-2">
+              {/* Additional information about the test case */}
+              <div>Status: {test.status}</div>
+              <div>Output: {test.output}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
         
         {/* Add more cards for other test cases as needed */}
       </div>
