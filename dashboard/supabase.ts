@@ -17,6 +17,7 @@ export type Database = {
           repo: string | null
           status: string | null
           test: string | null
+          time: number | null
         }
         Insert: {
           created_at?: string
@@ -25,6 +26,7 @@ export type Database = {
           repo?: string | null
           status?: string | null
           test?: string | null
+          time?: number | null
         }
         Update: {
           created_at?: string
@@ -33,6 +35,7 @@ export type Database = {
           repo?: string | null
           status?: string | null
           test?: string | null
+          time?: number | null
         }
         Relationships: []
       }
