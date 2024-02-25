@@ -94,7 +94,7 @@ export default function Component() {
     // If repo.name == "agrepair", return example status
     // Otherwise, return no started status
 
-    if (repo.name === "agrepair") {
+    if (repo.name === "ultra-secure-python-code") {
       return {
         status: "completed",
         foundVulnerabilities: false,
