@@ -15,7 +15,7 @@ def run_with_timeout(command, timeout_seconds):
         return -1, "Process timed out", ""
 
 
-def test_walker(tests):
+def test_walker(tests, target_dir):
     interesting_output = {}
     good_tests = []
     for test in tests:
@@ -43,7 +43,7 @@ def test_walker(tests):
 
     with open("results.json", "w") as file:
         json.dump(interesting_output, file, indent=4)
-    for cov_file in Path('repo').rglob(".coverage*"):
+    for cov_file in Path(target_dir).rglob(".coverage*"):
         shutil.move(cov_file, "coverage")
     subprocess.Popen(["coverage", "combine"], cwd="coverage").wait()
     subprocess.Popen(["coverage", "html"], cwd="coverage").wait()
