@@ -240,7 +240,7 @@ const supabase = createClient<Database>(supabaseUrl, supabaseKey);
               {/* Icon */}
               <GitCommitIcon className="w-8 h-8" />
               <div className="grid gap-1">
-                <CardTitle>{test.test}</CardTitle>
+                <CardTitle>{test.name}</CardTitle>
                 <CardDescription>Time Elapsed: {test.time} seconds</CardDescription>
               </div>
               {/* Dropdown menu for additional actions */}
