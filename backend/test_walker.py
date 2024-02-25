@@ -27,7 +27,6 @@ def test_walker(tests):
         else:
             good_tests.append(test)
 
-
     for test in good_tests:
         basename = os.path.basename(test)
         dirname = os.path.dirname(test)
@@ -36,21 +35,20 @@ def test_walker(tests):
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=dirname)
         output, err = process.communicate()
 
-        if output != b'':
-            interesting_output[test] = {
-                "stdout": output,
-                "stderr": err,
-                "ran": True
-            }
+        interesting_output[test] = {
+            "stdout": str(output),
+            "stderr": str(err),
+            "ran": True
+        }
 
     with open("results.json", "w") as file:
         json.dump(interesting_output, file, indent=4)
+    for cov_file in Path('repo').rglob(".coverage*"):
+        shutil.move(cov_file, "coverage")
+    subprocess.Popen(["coverage", "combine"], cwd="coverage").wait()
+    subprocess.Popen(["coverage", "html"], cwd="coverage").wait()
     for fuzz in Path('repo').rglob('*fuzz-guard.py'):
         shutil.move(fuzz, "tests")
     for crash in os.listdir('.'):
         if "crash-" in crash:
             shutil.move(crash, "crashes")
-    for cov_file in Path('repo').rglob(".coverage*"):
-        shutil.move(cov_file, "coverage")
-    subprocess.Popen(["coverage", "combine"], cwd="coverage")
-    subprocess.Popen(["coverage", "html"], cwd="coverage")
