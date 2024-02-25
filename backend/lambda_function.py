@@ -2,13 +2,13 @@ import ast
 import json
 import os
 from openai import OpenAI
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from proompt import proompt, api_references
 from pathlib import Path
 from test_walker import test_walker
 import subprocess
 
-load_dotenv()
+# load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPEN_AI_API_KEY"))
 
@@ -109,6 +109,13 @@ def main(TARGET_DIR, the_dir):
     test_walker(tests, TARGET_DIR, the_dir)
 
 
+def print_all_files(folder_path):
+    for dirpath, dirnames, filenames in os.walk(folder_path):
+        for filename in filenames:
+            full_path = os.path.join(dirpath, filename)
+            print(full_path)
+
+
 def lambda_handler(event, context):
     body = event["body"]
     body = json.loads(body)
@@ -124,3 +131,4 @@ def lambda_handler(event, context):
     subprocess.call(["git", "clone", repo], cwd=the_dir)
 
     main(f"{the_dir}/{repo_name}", the_dir)
+    print_all_files(the_dir)
