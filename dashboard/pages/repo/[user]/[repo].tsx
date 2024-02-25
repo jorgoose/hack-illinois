@@ -185,11 +185,11 @@ const supabase = createClient<Database>(supabaseUrl, supabaseKey);
                 </div>
                 <div className="grid grid-cols-2 items-center gap-2">
                   <div>Passed</div>
-                  <div className="text-right">20</div>
+                  <div className="text-right">{tests.filter(test => test.status === 'PASS').length}</div>
                 </div>
                 <div className="grid grid-cols-2 items-center gap-2">
                   <div>Failed</div>
-                  <div className="text-right">5</div>
+                  <div className="text-right">{tests.filter(test => test.status === 'FAIL').length}</div>
                 </div>
               </div>
               <div />
