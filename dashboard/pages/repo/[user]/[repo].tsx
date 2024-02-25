@@ -276,7 +276,6 @@ export default function RepoPage() {
                       </CardHeader>
                       <CardContent className="grid gap-2">
                         <div>Status: {test.status}</div>
-                        <div>Output: {test.output}</div>
                       </CardContent>
                       <div className="flex flex-col items-center justify-center w-full h-full gap-4">
                         <Card className="w-full max-w-3xl p-0 items-center">
@@ -329,10 +328,7 @@ export default function RepoPage() {
                                           Input
                                         </TableCell>
                                         <TableCell className="whitespace-pre-line">
-                                          {`{
-                    "name": "John Doe",
-                    "age": 30
-                  }`}
+                                          {test.test}
                                         </TableCell>
                                       </TableRow>
                                       <TableRow>
@@ -340,10 +336,7 @@ export default function RepoPage() {
                                           Output
                                         </TableCell>
                                         <TableCell className="whitespace-pre-line">
-                                          {`{
-                    "name": "John Doe",
-                    "age": 30
-                  }`}
+                                          {test.output}
                                         </TableCell>
                                       </TableRow>
                                     </TableBody>
