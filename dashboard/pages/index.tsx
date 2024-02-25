@@ -33,12 +33,45 @@ export default function Component() {
         },
       });
 
-      setRepositories(response.data);
-      setGithubUser(response.data[0].owner);
+      // This code is so jank lol
+      // Move the repository with the name "Ultra-Secure-Python-Code" to the first position in the array
+      // This is a temporary solution to make sure the repository is always displayed first
+      // This updated version should be stored in the state, using a copy
+
+      const updatedRepos = response.data.sort((a: Repository, b: Repository) => {
+        if (a.name === "ultra-secure-python-code") {
+          return -1;
+        }
+        return 0;
+      });
+
+      setRepositories(updatedRepos);
+      setGithubUser(updatedRepos[0].owner.login);
       console.log(response.data);
     };
 
     fetchRepositories();
+  }, []);
+
+  // Change scrollbar colors
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #121212;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+      }
+    `;
+    document.head.appendChild(style);
   }, []);
 
 
@@ -100,26 +133,26 @@ export default function Component() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
-        <Link className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4" href="#">
-          <ShieldIcon className="w-6 h-6 text-cyan-500" />
-          <span className="sr-only">Acme Inc</span>
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white">
+      <header className="flex items-center h-16 px-4 bg-gray-800 border-b border-gray-700 shrink-0 md:px-6">
+        <Link className="flex items-center gap-4 text-lg font-semibold sm:text-base mr-4" href="#">
+          <ShieldIcon className="w-10 h-10 text-cyan-500" />
+          <span className="text-xl font-bold">Fuzz<span className="text-cyan-500">Guard</span></span>
         </Link>
         <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
           <Link className="font-bold" href="#">
             Projects
           </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
+          <Link className="text-gray-400" href="#">
             Deployments
           </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
+          <Link className="text-gray-400" href="#">
             Analytics
           </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
+          <Link className="text-gray-400" href="#">
             Logs
           </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
+          <Link className="text-gray-400" href="#">
             Settings
           </Link>
         </nav>
@@ -185,16 +218,16 @@ export default function Component() {
               <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-1">
                   <GithubIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">Updated {formatDistanceToNow(new Date(repo.updated_at))} ago</span>
+                  <span className="text-gray-400">Updated {formatDistanceToNow(new Date(repo.updated_at))} ago</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <GitBranchIcon className="w-4 h-4" />
-                  <span className="text-gray-500 dark:text-gray-400">main</span>
+                  <span className="text-gray-400">main</span>
                 </div>
                 <div className="flex items-center gap-1">
                   {/* Status visual based on fuzz testing status, color based on status, color is passed in to icon */}
                   <ShieldIcon className={`w-4 h-4 ${fuzzingStatus.status === 'completed' ? 'text-green-500' : 'text-stone-700'}`} />
-                  <span className="text-gray-500 dark:text-gray-400">{`Fuzz testing ${fuzzingStatus.status}`}</span>
+                  <span className="text-gray-400">{`Fuzz testing ${fuzzingStatus.status}`}</span>
                 </div>
                 {/* Only display if status is completed */}
                 {/* If vulnerabilities found, display MessageCircleWarningIcon with red. */}
@@ -207,7 +240,7 @@ export default function Component() {
                       ) : (
                         <CheckCircleIcon className="w-4 h-4 text-green-500" />
                       )}
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-400">
                         {fuzzingStatus.foundVulnerabilities ? "Vulnerabilities found" : "No vulnerabilities found"}
                       </span>
                     </>
@@ -220,8 +253,8 @@ export default function Component() {
                 {fuzzingStatus.reportUrl && (
                   <>
                   <div className="flex flex-col items-end">
-                  <span className="text-gray-500 dark:text-gray-400">Functions analyzed: {fuzzingStatus.functionsAnalyzed}</span>
-                  <span className="text-gray-500 dark:text-gray-400">Total time: {fuzzingStatus.totalTime}</span>
+                  <span className="text-gray-400">Functions analyzed: {fuzzingStatus.functionsAnalyzed}</span>
+                  <span className="text-gray-400">Total time: {fuzzingStatus.totalTime}</span>
                 </div>
                   <Link href={"/repo/" + repo.owner.login + "/" + repo.name}>
                     <Button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">View Report</Button>
