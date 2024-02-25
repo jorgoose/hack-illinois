@@ -6,6 +6,7 @@ import { Octokit } from "@octokit/core";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Database } from "@/supabase";
 import {
   Card,
   CardContent,
@@ -23,19 +24,21 @@ import {
 import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
 import { createClient } from '@supabase/supabase-js';
 
+type Test = Database["public"]["Tables"]["tests"]["Row"];
+
 export default function RepoPage() {
   const router = useRouter();
   const { user, repo } = router.query;
   const [repository, setRepository] = useState(null);
   const [coverage, setCoverage] = useState(false);
-    const [tests, setTests] = useState(null);
+    const [tests, setTests] = useState<Test[]>([]);
 
 
 
 const supabaseUrl = 'https://enobxhmkgvnegrpndfqn.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVub2J4aG1rZ3ZuZWdycG5kZnFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg4MjIwMTQsImV4cCI6MjAyNDM5ODAxNH0.nmADebInnFNVSa6eqeQypKNmzx0vFi0R-iXOiCc6S0E';
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 // Now you can use the 'supabase' object to interact with your Supabase project
 
@@ -58,7 +61,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
         .from('tests')
         .select('*')
         .eq('repo', 'ultra-secure-python-code');
-        setTests(tests);
+        setTests(tests || []);
         console.log(tests, error);
     }
 
@@ -178,7 +181,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
               <div className="grid gap-2">
                 <div className="grid grid-cols-2 items-center gap-2">
                   <div>Tests</div>
-                  <div className="text-right">25</div>
+                  <div className="text-right">{tests.length}</div>
                 </div>
                 <div className="grid grid-cols-2 items-center gap-2">
                   <div>Passed</div>
@@ -237,8 +240,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
               {/* Icon */}
               <GitCommitIcon className="w-8 h-8" />
               <div className="grid gap-1">
-                <CardTitle>{test.code}</CardTitle>
-                <CardDescription>Time Completed: {test.timestamp}</CardDescription>
+                <CardTitle>{test.test}</CardTitle>
+                <CardDescription>Time Completed: {test.created_at}</CardDescription>
               </div>
               {/* Dropdown menu for additional actions */}
               <DropdownMenu>
