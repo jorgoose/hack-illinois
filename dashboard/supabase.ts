@@ -19,6 +19,7 @@ export type Database = {
           test: string | null
           time: number | null
           name: string | null
+          stdout?: string | null
         }
         Insert: {
           created_at?: string
@@ -29,6 +30,7 @@ export type Database = {
           test?: string | null
           time?: number | null
           name: string | null
+          stdout?: string | null
         }
         Update: {
           created_at?: string
@@ -39,6 +41,7 @@ export type Database = {
           test?: string | null
           time?: number | null
           name: string | null
+          stdout?: string | null
         }
         Relationships: []
       }

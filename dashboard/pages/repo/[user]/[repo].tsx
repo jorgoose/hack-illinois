@@ -74,11 +74,11 @@ export default function RepoPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <div>
-        <div className="border-b bg-white dark:bg-gray-950 border-gray-100/40">
+        <div className="border-b bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white">
           <div className="max-w-6xl w-full mx-auto grid gap-2 items-center min-h-[4rem] sm:grid-cols-[1fr_auto] sm:gap-4 py-4 px-4 md:grid-cols-[1fr_auto_1fr] md:gap-8">
             <div className="flex items-center gap-2 text-xl font-semibold">
-              <TerminalIcon className="w-6 h-6" />
-              <h1 className="text-2xl font-bold">Fuzz Testing</h1>
+              <ShieldIcon className="w-6 h-6 text-cyan-500" />
+              <h1 className="text-2xl font-bold ml-4">Fuzz<span className="text-cyan-500">Guard</span></h1>
             </div>
             <nav className="flex items-center justify-end gap-4 text-sm md:gap-6">
               <div className="flex items-center gap-2">
@@ -101,10 +101,6 @@ export default function RepoPage() {
                   Coverage
                 </span>
               </div>
-              {/* <div className="flex items-center gap-2">
-              <AlertTriangleIcon className="w-4 h-4" />
-              <span className="font-medium">Issues</span>
-            </div> */}
             </nav>
           </div>
         </div>
@@ -163,196 +159,86 @@ export default function RepoPage() {
           </div>
         )}
         {!coverage && (
-          <div className="flex-1 bg-gray-100/40 dark:bg-gray-800/40 p-4">
-            <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <BoxIcon className="w-8 h-8" />
-                  <div className="grid gap-1">
-                    <CardTitle>Test Suite</CardTitle>
-                    <CardDescription>Integration Tests</CardDescription>
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="ml-auto" size="icon" variant="ghost">
-                        <MoreHorizontalIcon className="w-4 h-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View Suite</DropdownMenuItem>
-                      <DropdownMenuItem>Run Again</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </CardHeader>
-                <CardContent className="grid gap-2">
-                  <div className="grid gap-2">
-                    <div className="grid grid-cols-2 items-center gap-2">
-                      <div>Tests</div>
-                      <div className="text-right">{tests.length}</div>
-                    </div>
-                    <div className="grid grid-cols-2 items-center gap-2">
-                      <div>Passed</div>
-                      <div className="text-right">
-                        {tests.filter((test) => test.status === "PASS").length}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 items-center gap-2">
-                      <div>Failed</div>
-                      <div className="text-right">
-                        {tests.filter((test) => test.status === "FAIL").length}
-                      </div>
-                    </div>
-                  </div>
-                  <div />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center gap-4">
-                  <AlertTriangleIcon className="w-8 h-8" />
-                  <div className="grid gap-1">
-                    <CardTitle>Issues Found</CardTitle>
-                    <CardDescription>Security Vulnerabilities</CardDescription>
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="ml-auto" size="icon" variant="ghost">
-                        <MoreHorizontalIcon className="w-4 h-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View Issues</DropdownMenuItem>
-                      <DropdownMenuItem>Resolve</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </CardHeader>
-                <CardContent className="grid gap-2">
-                  <div className="grid grid-cols-2 items-center gap-2">
-                    <div>High</div>
-                    <div className="text-right">2</div>
-                  </div>
-                  <div className="grid grid-cols-2 items-center gap-2">
-                    <div>Medium</div>
-                    <div className="text-right">3</div>
-                  </div>
-                  <div className="grid grid-cols-2 items-center gap-2">
-                    <div>Low</div>
-                    <div className="text-right">1</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-1">
-              <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-1">
-                {tests &&
-                  tests.map((test, index) => (
-                    <Card key={index}>
-                      <CardHeader className="flex flex-row items-center gap-4">
-                        <GitCommitIcon className="w-8 h-8" />
-                        <div className="grid gap-1">
-                          <CardTitle>{test.name}</CardTitle>
-                          <CardDescription>
-                            Time Elapsed: {test.time} seconds
-                          </CardDescription>
-                        </div>
-                      <div>Status: {test.status}</div>
-                      </CardHeader>
-                      
-                      <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-                        <Card className="w-full max-w-3xl p-0 items-center">
-                          <CardContent className="p-0">
-                            <div className="border-b">
-                              <div className="grid items-center grid-cols-1 p-4 md:grid-cols-2 md:gap-4 md:p-6">
-                                <div className="flex items-center gap-2 text-lg font-semibold md:gap-1">
-                                  <FileTextIcon className="h-6 w-6" />
-                                  <h1 className="text-xl font-bold">
-                                    {test.name}
-                                  </h1>
-                                </div>
-                                <div className="flex items-center justify-end md:justify-start">
-                                  <Badge className="text-sm" variant="outline">
-                                    {test.status}
-                                  </Badge>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="p-4 border-b md:p-6">
-                              <div className="grid gap-2 md:gap-1.5">
-                                <div className="grid items-center grid-cols-1 md:grid-cols-2 md:gap-2">
-                                  <div className="text-sm font-medium md:text-base">
-                                    Execution Time
-                                  </div>
-                                  <div className="flex items-center justify-end text-sm md:text-right md:gap-2">
-                                    <span>{test.time}s</span>
-                                  </div>
-                                </div>
-                                <div className="grid items-center grid-cols-1 md:grid-cols-2 md:gap-2">
-                                  <div className="text-sm font-medium md:text-base">
-                                    Potential Reasons for Failure
-                                  </div>
-                                  <div className="flex items-center justify-end text-sm md:text-right md:gap-2">
-                                    <ul className="list-disc list-inside text-sm md:text-base">
-                                      <li>Invalid input data</li>
-                                      <li>Assertion error in line 42</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="p-4 md:p-6">
-                              <Card>
-                                <CardContent className="p-0">
-                                  <Table className="border-0">
-                                    <TableBody>
-                                      <TableRow>
-                                        <TableCell className="font-medium">
-                                          Input
-                                        </TableCell>
-                                        <TableCell className="whitespace-pre-line">
-                                          {test.test}
-                                        </TableCell>
-                                      </TableRow>
-                                      <TableRow>
-                                        <TableCell className="font-medium">
-                                          Output
-                                        </TableCell>
-                                        <TableCell className="whitespace-pre-line">
-                                          {test.output}
-                                        </TableCell>
-                                      </TableRow>
-                                    </TableBody>
-                                  </Table>
-                                </CardContent>
-                              </Card>
-                            </div>
-                            <div className="p-4 md:p-6">
-                              <Card>
-                                <CardHeader className="border-b">
-                                  <CardTitle>Stack Trace</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                  <pre className="text-xs p-4 rounded-md bg-gray-50 dark:bg-gray-800">
-                                    AssertionError: expected true to be false at
-                                    Context.it (/test/test_parse.js:6:12) at
-                                    callFn
-                                  </pre>
-                                </CardContent>
-                              </Card>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </Card>
-                  ))}
+  <div className="flex-1 bg-gray-800 p-4 text-white">
+    <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-2">
+      {/* Card components for Test Suite and Issues Found... */}
+    </div>
+    <div className="max-w-6xl w-full mx-auto grid gap-4 md:grid-cols-1">
+      {tests &&
+        tests.map((test, index) => (
+          <Card key={index} className="bg-gray-900 shadow-xl rounded-lg p-6">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <GitCommitIcon className="w-8 h-8 text-green-500" />
+              <div className="grid gap-1">
+                <CardTitle className="text-xl font-semibold">{test.name}</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Time Elapsed: {test.time} seconds
+                </CardDescription>
               </div>
-            </div>
-          </div>
-        )}
+              <div className={`text-sm font-medium ${test.status === "PASS" ? "text-green-500" : "text-red-500"}`}>
+                Status: {test.status}
+              </div>
+            </CardHeader>
+            <CardContent className="grid gap-6">
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 items-center gap-2">
+                  <div className="text-sm font-medium">Execution Time</div>
+                  <div className="text-right">{test.time}s</div>
+                </div>
+                <div className="grid grid-cols-2 items-center gap-2">
+                  <div className="text-sm font-medium">Potential Reasons for Failure</div>
+                  <div className="text-right">
+                    <ul className="list-disc list-inside text-sm">
+                      <li>Invalid input data</li>
+                      <li>Assertion error in line 42</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <details className="bg-gray-800 rounded-lg p-4">
+                <summary className="cursor-pointer font-medium">Generated Test Code</summary>
+                <pre className="text-xs p-4 rounded-md bg-gray-700 mt-4 whitespace-pre-wrap">
+                  {test.test}
+                </pre>
+              </details>
+              <div>
+                <Card className="bg-gray-800 rounded-lg p-4">
+                  <CardContent className="grid gap-4">
+                    <div className="grid grid-cols-2 items-center gap-2">
+                      <div className="font-medium">Output</div>
+                      <div className="whitespace-pre-line">{test.output}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              <div>
+                <Card className="bg-gray-800 rounded-lg p-4">
+                  <CardHeader className="border-b mb-4">
+                    <CardTitle className="text-lg font-semibold">stdout</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <pre className="text-xs p-4 rounded-md bg-gray-700 whitespace-pre-wrap">
+                      {test.stdout ? test.stdout : "Empty stdout implies fuzzing did not encounter any potential vulnerabilities"}
+                    </pre>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+    </div>
+  </div>
+)}
+
+
+
+
+
       </div>
     </div>
   );
 }
+
 
 interface IconProps {
   className?: string;
@@ -442,6 +328,20 @@ function FileIcon(props: IconProps) {
     </svg>
   );
 }
+
+function ShieldIcon(props: IconProps) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L4 6V12C4 16.42 7.79 20.5 12 22C16.21 20.5 20 16.42 20 12V6L12 2Z" /> {/* Shield */}
+      <g transform="scale(0.05) translate(145, 215)"> {/* Smiley, scaled and positioned to fit in the shield */}
+        <circle cx="41" cy="32" r="15" fill="currentColor" /> {/* Left eye */}
+        <circle cx="147" cy="32" r="15" fill="currentColor" /> {/* Right eye */}
+        <path d="M50 80 Q 95 150 140 80" fill="none" stroke="currentColor" strokeWidth="25" /> {/* Mouth */}      
+      </g>
+    </svg>
+  );
+}
+
 
 function GitCommitIcon(props: IconProps) {
   return (
